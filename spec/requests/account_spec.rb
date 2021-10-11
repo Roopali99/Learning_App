@@ -27,7 +27,7 @@ RSpec.describe 'Account API', type: :request do
       before { post '/account', params: valid_attributes }
 
       it 'creates account' do
-        expect("9730048096").to eq("9730048096")
+        expect('mobile').to eq('mobile')
       end
 
       it 'returns status code 201' do

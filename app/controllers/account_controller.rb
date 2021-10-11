@@ -27,6 +27,8 @@ class AccountController < ApplicationController
     def update
         @account.update(account_params)
         head :no_content
+        # json_response(@account)
+        puts "otp sent"
     end      
     private
       
@@ -59,17 +61,11 @@ class AccountController < ApplicationController
 
     def validate_token
         @header = request.headers['Authorization']
-        puts "token yayala hava headrt madhe "
-        puts @header.to_json
-        puts "DECODE KARTA HEADER MADHE AHE KA"
-        
+               
         if @header.blank?
             puts "TOKEN IS BLANK"
         elsif Account.where(token: @header)
-            # puts valid_t.to_json
-            puts Account.where(token: @header)
-            puts "WHERE STATEMENT"
-           puts  @account.to_json
+        #    puts  @account.to_json
             puts "TRUEEEE"
             return @account.to_json
         else 
