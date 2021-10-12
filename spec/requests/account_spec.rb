@@ -1,8 +1,8 @@
 require 'rails_helper'
 RSpec.describe 'Account API', type: :request do
+
   let!(:accounts) { create_list(:account, 10) }
   let(:id) { accounts.first.id }
-  # let(:application) { FactoryBot.create(:application) }
   let(:token) { FactoryBot.create(:access_token, resource_owner_id: accounts.first.id) }
   
 
@@ -11,8 +11,6 @@ RSpec.describe 'Account API', type: :request do
     context 'when the record exists' do
       it 'returns accounts' do
         expect(JSON.parse(response.body).size).to eq(10)
-        puts "CHECKING TOKEN******************"
-        puts token.to_json
       end
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
@@ -21,30 +19,28 @@ RSpec.describe 'Account API', type: :request do
   end
 
   describe 'POST /account' do
-    let!(:valid_attributes) { { mobile: '9730048096', student_name: 'Roopali', email: 'ragha', dob: '1999-11-14', otp: '1234' } }
-
+    let!(:valid_attributes) { { "mobile": 9730048096, "student_name": 'Roopali', email: 'ragha', dob: '1999-11-14', otp: '1234' } }
     context 'when the request is valid' do
       before { post '/account', params: valid_attributes }
 
       it 'creates account' do
-        expect('mobile').to eq('mobile')
+        expect(JSON.parse(response.body)["mobile"]).to eq(valid_attributes[:mobile])
       end
 
       it 'returns status code 201' do
-        expect(response).to have_http_status(201)#201
+        expect(response).to have_http_status(201)
       end
     end
 
     context 'when the request is invalid' do
       before { post '/account', params: { mobile: '000' } }
-
+      
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
       end
 
       # it 'returns a validation failure message' do
-      #   expect(response.body)
-      #     .to match(/Validation failed: Created by can't be blank/)
+      #   expect(JSON.parse(response.body)).to match(/Validation failed: Created by can't be blank/)
       # end
     end
   end
@@ -77,15 +73,15 @@ RSpec.describe 'Account API', type: :request do
       end
     end
    
-    before{ get "/account/id",headers: {'Authorization': token.token } }
+    before { get "/account/id",headers: {'Authorization': token.token } }
     context "when token is correct" do
       it "return account of id" do
         # expect(JSON.parse(response.body)).not_to be_empty
         expect(id).to eq(1) 
       end
     end
-    context 'when the record does not exist' do
 
+    context 'when the record does not exist' do
       let(:id) { 100 }
       it 'returns status code 404' do
         expect(response).to have_http_status(204) #404

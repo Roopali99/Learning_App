@@ -12,9 +12,9 @@ class ExerciseController < ApplicationController
 
   def show
     if validate_token    
+      puts "Show!"
       # json_response(@exercise)
       puts @exercise.to_json
-      puts "SHOOOOOWWWWWWW"
     else
       puts "Wrong Token"
     end
@@ -24,7 +24,7 @@ class ExerciseController < ApplicationController
     @account = Account.find_by(params[:id])
   end
   def set_board
-    @board = @account.boards.find_by(id: params[:board_id]) if @account
+    @board = @account.boards.find_by(id: params[:account_id]) if @account
   end
 
         
@@ -49,8 +49,8 @@ class ExerciseController < ApplicationController
     if @header.blank?
       puts "TOKEN IS BLANK"
     elsif Account.where(token: @header)
-      puts "TRUEEEE"
-      return @account.to_json
+      puts "True!"
+      return @exercise.to_json
     else 
       return false
     end

@@ -1,22 +1,24 @@
 class AnswerController < ApplicationController
-    before_action :set_account
-    before_action :set_board
-    before_action :set_board_standard
-    before_action :set_standard_subject
-    before_action :set_subject_lesso
-    before_action :set_lesso_exercise
-    before_action :set_exercise_question
-    before_action :set_question_answer, only: [:show]
+  before_action :set_account
+  before_action :set_board
+  before_action :set_board_standard
+  before_action :set_standard_subject
+  before_action :set_subject_lesso
+  before_action :set_lesso_exercise
+  before_action :set_exercise_question
+  before_action :set_question_answer, only: [:show]
         
     def index
-      json_response(@lesso.exercise)
+      # json_response(@question.answer)
+      puts "INDEX"
+      puts @question.answer
     end
 
     def show
-      if validate_token    
-        json_response(@exercise)
-        puts @exercise.to_json
-        puts "SHOOOOOWWWWWWW"
+      if validate_token   
+        puts "Show!" 
+        json_response(@answer)
+        puts @answer.to_json
       else
         puts "Wrong Token"
       end
@@ -48,22 +50,15 @@ class AnswerController < ApplicationController
     end   
     def set_question_answer
       @answer = @question.answer.find_by!(id: params[:question_id]) if @question
-    end     
+    end  
+
   def validate_token
     @header = request.headers['Authorization']
-    puts "token yayala hava headrt madhe "
-    puts @header.to_json
-    puts "DECODE KARTA HEADER MADHE AHE KA"
-          
     if @header.blank?
       puts "TOKEN IS BLANK"
     elsif Account.where(token: @header)
-      # puts valid_t.to_json
-      puts Account.where(token: @header)
-      puts "WHERE STATEMENT"
-      puts  @account.to_json
-      puts "TRUEEEE"
-      return @account.to_json
+      puts "True!"
+      return @answer.to_json
     else 
       return false
     end

@@ -1,4 +1,5 @@
 require 'rails_helper'
+include ActiveModel::Serialization
 RSpec.describe Lesso, type: :model do
   it { should belong_to(:subject) }
   it { should has_many(:exercise)}

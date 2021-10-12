@@ -55,8 +55,6 @@ class AccountController < ApplicationController
             created_at: access_token.created_at
         } 
         @account.token = token 
-        # puts "ACCESS TOKEN CREATED"
-        # puts @account.token
     end
 
     def validate_token

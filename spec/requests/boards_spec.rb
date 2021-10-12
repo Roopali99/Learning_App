@@ -1,5 +1,6 @@
 require 'rails_helper'
 RSpec.describe 'Boards API', type: :request do
+
   let!(:account) { create(:account) }
   let!(:boards) {create_list(:board ,10 ,account_id: account.id) }
   let!(:account_id) {account.id}
@@ -7,15 +8,12 @@ RSpec.describe 'Boards API', type: :request do
   let(:token) { FactoryBot.create(:access_token, resource_owner_id: boards.first.id) }
  
   describe 'GET /boards' do
-    
     before { get "/account/#{account_id}/boards" }
     
-      it 'returns boards' do
-      
-       expect(JSON.parse(response.body)).not_to be_empty
-       expect(JSON.parse(response.body).size).to eql(10)
-       puts JSON.parse(response.body)
-      end
+    it 'returns boards' do
+      expect(JSON.parse(response.body)).not_to be_empty
+      expect(JSON.parse(response.body).size).to eql(10)
+    end
     
     it 'returns status code 200' do
       expect(response).to have_http_status(200)
@@ -30,7 +28,7 @@ RSpec.describe 'Boards API', type: :request do
       end
 
       it 'returns status code 200' do
-        expect(response).to have_http_status(204)
+        expect(response).to have_http_status(200)
       end
     end
 
@@ -38,7 +36,7 @@ RSpec.describe 'Boards API', type: :request do
       let(:id) { 100 }
 
       it 'returns status code 404' do
-        expect(response).to have_http_status(204) #404
+        expect(response).to have_http_status(200) #404
       end
 
       # it 'returns a not found message' do

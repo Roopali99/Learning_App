@@ -33,18 +33,17 @@ RSpec.describe 'Answers API' do
   let(:token) { create(:access_token, resource_owner_id: answers.first.id) }
 
   describe 'GET answers' do
+    before { get "/account/#{account_id}/boards/#{board_id}/standards/#{standard_id}/subjects/#{subject_id}/lesso/#{lesso_id}/exercise/#{exercise_id}/question/#{question_id}/answer" }    
+    context 'when content exists' do
+      it 'returns status code 200' do
+        expect(response).to have_http_status(404) #200
+      end
       
-      before { get "/account/#{account_id}/boards/#{board_id}/standards/#{standard_id}/subjects/#{subject_id}/lesso/#{lesso_id}/exercise/#{exercise_id}/question/#{question_id}/answer" } 
-         
-      context 'when content exists' do
-          
-          it 'returns status code 200' do
-              puts response.inspect
-              expect(response).to have_http_status(404) #200
-          end
-          it 'returns all content exercises' do
-              expect(JSON.parse(response.body).size).to eq(1)
-          end
+      it 'returns all content exercises' do
+        expect(JSON.parse(response.body).size).to eq(1)
+        puts "RESPONSEE****"
+        puts response.body
+      end
       
       end
 

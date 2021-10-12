@@ -11,13 +11,14 @@ class StandardsController < ApplicationController
   
     
     def show
-      if validate_token    
+      if validate_token  
+        puts "Showing!"  
         json_response(@standard)
         puts @standard.to_json
-        puts "SHOOOOOWWWWWWW"
-    else
+        
+      else
         puts "Wrong Token"
-    end
+      end
      
     end
 
@@ -35,24 +36,16 @@ class StandardsController < ApplicationController
     end
   
     def set_board_standard
-      @standard = @board.standards.find_by!(id: params[:id]) if @board
+      @standard = @board.standards.find_by!(id: params[:board_id]) if @board
     end
 
     def validate_token
       @header = request.headers['Authorization']
-      puts "token yayala hava headrt madhe "
-      puts @header.to_json
-      puts "DECODE KARTA HEADER MADHE AHE KA"
-      
       if @header.blank?
-          puts "TOKEN IS BLANK"
+        puts "TOKEN IS BLANK"
       elsif Account.where(token: @header)
-          # puts valid_t.to_json
-          puts Account.where(token: @header)
-          puts "WHERE STATEMENT"
-         puts  @account.to_json
-          puts "TRUEEEE"
-          return @account.to_json
+        puts "TRUEEEE"
+        return @standard.to_json
       else 
           return false
       end

@@ -1,6 +1,5 @@
 require 'rails_helper'
-RSpec.describe 'Questions API' do
-  
+RSpec.describe 'Questions API' do  
   let!(:account) { create(:account) }
 
   let!(:boards) {create_list(:board ,10 ,account_id: account.id) }
@@ -30,57 +29,49 @@ RSpec.describe 'Questions API' do
   let(:token) { create(:access_token, resource_owner_id: questions.first.id) }
 
   describe 'GET /boards/:board_id/standards/:standard_id/subjects/:subject_id/lessons/:lesson_id/exercises' do
-      
-      before { get "/account/#{account_id}/boards/#{board_id}/standards/#{standard_id}/subjects/#{subject_id}/lesso/#{lesso_id}/exercise/#{exercise_id}/question" } 
-         
-      context 'when content exists' do
-          
-          it 'returns status code 200' do
-              puts response.inspect
-              expect(response).to have_http_status(404) #200
-          end
-          it 'returns all content exercises' do
-              expect(JSON.parse(response.body).size).to eq(1)
-          end
-      
+    before { get "/account/#{account_id}/boards/#{board_id}/standards/#{standard_id}/subjects/#{subject_id}/lesso/#{lesso_id}/exercise/#{exercise_id}/question" }      
+    context 'when content exists' do
+        
+      it 'returns status code 200' do
+        expect(response).to have_http_status(404) #200
+        end
+      it 'returns all content exercises' do
+        expect(JSON.parse(response.body).size).to eq(1)
       end
+    end
 
-      context 'when content does not exist' do
-
-          let(:subject_id) { 0 }
-            it 'returns status code 404' do
-              expect(response).to have_http_status(404)
-            end 
-      
-          #   it 'returns a not found message' do
-          #     expect(JSON(response)).to match(/Couldn't find Board/)
-          #    end
-      end
+    context 'when content does not exist' do
+      let(:subject_id) { 0 }
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end 
+     
+      #   it 'returns a not found message' do
+      #     expect(JSON(response)).to match(/Couldn't find Board/)
+      #    end
+    end
   end
 
   describe 'GET /boards/:board_id/standards/:standard_id/subjects/:subject_id/lesson/:id' do
-  before { get "/account/#{account_id}/boards/#{board_id}/standards/#{standard_id}/subjects/#{subject_id}/lesso/#{lesso_id}/exercise/#{exercise_id}/question/#{id}", headers: {'Authorization': token.token } }
+    before { get "/account/#{account_id}/boards/#{board_id}/standards/#{standard_id}/subjects/#{subject_id}/lesso/#{lesso_id}/exercise/#{exercise_id}/question/#{id}", headers: {'Authorization': token.token } }
 
-  context 'when content exercise exists' do
-    it 'returns status code 200' do
-      expect(response).to have_http_status(204)
+    context 'when content exercise exists' do
+      it 'returns status code 200' do
+        expect(response).to have_http_status(204)
+      end
+      it 'returns the content' do
+        expect(id).to eq(1)  
+      end
     end
-    it 'returns the content' do
-      expect(id).to eq(1)  
-    end
-  end
-  
-  context 'when content exercise does not exist' do
-    let(:id) { 0 }
+    context 'when content exercise does not exist' do
+      let(:id) { 0 }
+      it 'returns status code 404' do 
+        expect(response).to have_http_status(404)
+      end
 
-    it 'returns status code 404' do 
-      expect(response).to have_http_status(404)
+      #   it 'returns a not found message' do
+      #   expect(response).to match(/Couldn't find standard/)
+      # end
     end
-
-    # it 'returns a not found message' do
-    #   expect(response).to match(/Couldn't find standard/)
-    # end
-  end
   end
 end
-

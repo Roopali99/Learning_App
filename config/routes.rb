@@ -1,12 +1,6 @@
 Rails.application.routes.draw do
   use_doorkeeper
-  # devise_for :accounts
-  # use_doorkeeper  
-  # do
-  #   skip_controllers :authorizations, :applications,
-  #     :authorized_applications
-  # end
- 
+  puts
   resources :account do
     post 'account/login'
     post 'account/validate_token'
