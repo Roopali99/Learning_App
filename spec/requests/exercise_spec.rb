@@ -29,6 +29,13 @@ RSpec.describe 'Exercises API' do
     context 'when content exists' do
       it 'returns status code 200' do
         expect(response).to have_http_status(200) #200
+        expect(JSON.parse(response.body)[:chapter_id]).to eq(:chapter_id)
+        expect(JSON.parse(response.body)[:ex_no]).to eq(:ex_no)
+        expect(JSON.parse(response.body)[:ex_status]).to eq(:ex_status)
+        expect(JSON.parse(response.body)[:num_of_ques]).to eq(:num_of_ques)
+        expect(JSON.parse(response.body)[:total_time]).to eq(:total_time)
+        expect(JSON.parse(response.body)[:start_time]).to eq(:start_time)
+        expect(JSON.parse(response.body)[:end_time]).to eq(:end_time)
       end
 
       it 'returns all content exercises' do

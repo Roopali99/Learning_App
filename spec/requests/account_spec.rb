@@ -25,6 +25,9 @@ RSpec.describe 'Account API', type: :request do
 
       it 'creates account' do
         expect(JSON.parse(response.body)["mobile"]).to eq(valid_attributes[:mobile])
+        expect(JSON.parse(response.body)["student_name"]).to eq(valid_attributes[:student_name])
+        expect(JSON.parse(response.body)["email"]).to eq(valid_attributes[:email])
+        expect(JSON.parse(response.body)["dob"]).to eq(valid_attributes[:dob])
       end
 
       it 'returns status code 201' do

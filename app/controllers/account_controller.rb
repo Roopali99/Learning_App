@@ -59,8 +59,10 @@ class AccountController < ApplicationController
 
     def validate_token
         @header = request.headers['Authorization']
-               
-        if @header.blank?
+       
+        if @account.otp.blank? && Account.where(otp: @body)
+            puts "OTP Blank!"      
+        elsif @header.blank?
             puts "TOKEN IS BLANK"
         elsif Account.where(token: @header)
         #    puts  @account.to_json

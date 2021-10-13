@@ -24,6 +24,8 @@ RSpec.describe 'Subjects API' do
 
       it 'returns all standard subjects' do
         expect(JSON.parse(response.body).size).to eq(10) #10
+        puts response.body
+        expect(JSON.parse(response.body)[0][:subject_nm]).to eq(:subject_name)
       end
         
     end

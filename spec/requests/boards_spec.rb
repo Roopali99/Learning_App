@@ -13,6 +13,11 @@ RSpec.describe 'Boards API', type: :request do
     it 'returns boards' do
       expect(JSON.parse(response.body)).not_to be_empty
       expect(JSON.parse(response.body).size).to eql(10)
+      puts "RESPONSE BOADY"
+      puts response.body
+      expect(JSON.parse(response.body))(board_nm).to eq("board_nm")
+      expect(JSON.parse(response.body))(board_logo).to eq("board_logo")
+      expect(JSON.parse(response.body))(board_description).to eq("board_description")
     end
     
     it 'returns status code 200' do

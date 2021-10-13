@@ -38,11 +38,11 @@ RSpec.describe 'Answers API' do
       it 'returns status code 200' do
         expect(response).to have_http_status(404) #200
       end
-      
+
       it 'returns all content exercises' do
         expect(JSON.parse(response.body).size).to eq(1)
-        puts "RESPONSEE****"
-        puts response.body
+        expect(JSON.parse(response.body)[:question_id]).to eq(:question_id)
+        expect(JSON.parse(response.bosy)[:solution]).to eq(:solution)
       end
       
       end

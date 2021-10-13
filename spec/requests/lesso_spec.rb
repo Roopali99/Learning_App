@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe 'Chapters API' do 
-  
+
   let!(:account) { create(:account) }
   let!(:boards) {create_list(:board ,10 ,account_id: account.id) }
   let!(:account_id) {account.id}
@@ -28,10 +28,12 @@ RSpec.describe 'Chapters API' do
     context 'when standard exists' do    
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
+
       end
 
       it 'returns all subject chapters' do
         expect(JSON.parse(response.body).size).to eq(1) 
+        expect(JSON.parse(response.body)[:chapter_nm]).to eq(:chapter_nm)
       end
       
     end

@@ -43,7 +43,9 @@ RSpec.describe 'Standards API' do
         expect(response).to have_http_status(200)
       end
       it 'returns the standard' do
-        expect(id).to eq(1) 
+        expect(id).to eq(1)
+        
+        expect(JSON.parse(response.body)["class_id"]).to eq(:class_id)
       end
     end
     

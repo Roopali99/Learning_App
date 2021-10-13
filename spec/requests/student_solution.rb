@@ -41,6 +41,13 @@ RSpec.describe 'student_solution  API' do
           it 'returns status code 200' do
               puts response.inspect
               expect(response).to have_http_status(200) #200
+              expect(JSON.parse(response.body)[:question_id]).to eq(:question_id)
+              expect(JSON.parse(response.body)[:question_status]).to eq(:question_status)
+              expect(JSON.parse(response.body)[:option_selected]).to eq(:option_selected)
+              expect(JSON.parse(response.body)[:status]).to eq(:status)
+              expect(JSON.parse(response.body)[:marked_later]).to eq(:marked_later)
+              expect(JSON.parse(response.body)[:skip]).to eq(:skip)
+              expect(JSON.parse(response.body)[:time_taken]).to eq(:time_taken)
           end
           it 'returns all content exercises' do
               expect(JSON.parse(response.body).size).to eq(10)

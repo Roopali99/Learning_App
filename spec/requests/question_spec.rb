@@ -37,6 +37,13 @@ RSpec.describe 'Questions API' do
         end
       it 'returns all content exercises' do
         expect(JSON.parse(response.body).size).to eq(1)
+        expect(JSON.parse(response.body)[:ex_no]).to eq(:ex_no)
+        expect(JSON.parse(response.body)[:ques_no]).to eq(:ques_no)
+        expect(JSON.parse(response.body)[:ques]).to eq(:ques)
+        expect(JSON.parse(response.body)[:option1]).to eq(:option1)
+        expect(JSON.parse(response.body)[:option1]).to eq(:option2)
+        expect(JSON.parse(response.body)[:option1]).to eq(:option3)
+        expect(JSON.parse(response.body)[:option1]).to eq(:option4)
       end
     end
 

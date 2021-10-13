@@ -57,10 +57,18 @@ RSpec.describe 'Analysis  API' do
 
         context 'when content exercise exists' do
             it 'returns status code 200' do
-                expect(response).to have_http_status(200)
+              expect(response).to have_http_status(200)
             end
             it 'returns the content' do
-                expect(id).to eq(1)  
+              expect(id).to eq(1)  
+              expect(JSON.parse(response.body)[:ex_no]).to eq(:ex_no)
+              expect(JSON.parse(response.body)[:total_ans_ampt]).to eq(:total_ans_ampt)
+              expect(JSON.parse(response.body)[:correct_ans]).to eq(:correct_ans)
+              expect(JSON.parse(response.body)[:wrong_ans]).to eq(:wrong_ans)
+              expect(JSON.parse(response.body)[:score]).to eq(:score)
+              expect(JSON.parse(response.body)[:accuracy]).to eq(:accuracy)
+              expect(JSON.parse(response.body)[:speed]).to eq(:speed)
+              expect(JSON.parse(response.body)[:time]).to eq(:time)
             end
         end
   
